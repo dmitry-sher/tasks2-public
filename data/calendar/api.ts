@@ -70,7 +70,6 @@ export const refreshAccessToken = async (): Promise<string> => {
     },
     body: JSON.stringify(body),
   };
-  console.log(`[refreshAccessToken] ${JSON.stringify({options, body})}`);
   const response = await fetch(GOOGLE_TOKEN_API_URL, options);
 
   if (!response.ok) {
@@ -112,9 +111,6 @@ export const getCalendarApiMethod = (method: string) => {
       options.headers['Content-Type'] = 'application/json';
     }
 
-    console.log(
-      `[calendarApiMethod] ${method} ${url} ${JSON.stringify(options)}`,
-    );
     const response = await fetch(url, options);
     if (!response.ok) {
       const responseData = await response.json();
@@ -165,7 +161,6 @@ export async function postTaskToCalendar(task: Task) {
 
       const call = getCalendarApiMethod('POST');
       const data = await call(GOOGLE_CALENDAR_API_URL, event);
-      console.log('[posttasktocalender]', JSON.stringify({data}));
 
       await setTaskGoogleId(task.id, data.id);
     }
@@ -195,7 +190,6 @@ export const fetchCalendarData = async (tomorrow = false) => {
     const data = await call(url);
 
     const events = data.items;
-    // console.log('fetchCalendarData', JSON.stringify({data, events}));
 
     const eventIds = events.map((event: any) => event.id);
     const existingTasks = await getTasksByGoogleEventIds(eventIds);
@@ -221,8 +215,6 @@ export const fetchCalendarData = async (tomorrow = false) => {
         updatedAt: new Date().toISOString(),
         google_event_id: event.id,
       }));
-
-    console.log('[fetchCalendarData]', JSON.stringify({newTasks}));
 
     for (const task of newTasks) {
       const newTask = await insertTask(task);
@@ -281,7 +273,6 @@ export const updateEventInCalendar = async (task: Task) => {
       const url = `${GOOGLE_CALENDAR_API_URL}/${task.google_event_id}`;
       const call = getCalendarApiMethod('PATCH');
       const data = await call(url, event);
-      console.log('[updateEventInCalendar]', JSON.stringify({data}));
     }
   } catch (error) {
     console.error('Error updating event in Google Calendar:', error);

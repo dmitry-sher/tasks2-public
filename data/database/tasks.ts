@@ -107,7 +107,6 @@ OR
   );
 
   const sql = parts.join(' ');
-  console.log(`[getTasks] ${JSON.stringify({sql, params})}`);
   return await query<Task>(sql, params);
 };
 

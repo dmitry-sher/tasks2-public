@@ -21,7 +21,7 @@ export const openDatabase = async () => {
       },
       // @ts-ignore
       error => {
-        console.log('Error: ' + error);
+        console.error('Error: ' + error);
         reject(error);
       },
     );

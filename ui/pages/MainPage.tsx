@@ -123,7 +123,6 @@ const MainPage: React.FC = () => {
   };
 
   const onSave = async (task: Task) => {
-    console.log(`[handleSave] ${JSON.stringify({task})}`);
     if (task.id > 0) {
       await dispatch(editTask(task));
       insertTaskHistoryLog(task.id, TaskHistoryAction.Edit, task);

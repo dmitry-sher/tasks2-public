@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'Tasks2' do
+target 'ExpenseTracker' do
   config = use_native_modules!
 
   use_react_native!(
@@ -23,7 +23,7 @@ target 'Tasks2' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'Tasks2Tests' do
+  target 'ExpenseTrackerTests' do
     inherit! :complete
     # Pods for testing
   end
